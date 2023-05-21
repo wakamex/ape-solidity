@@ -185,6 +185,14 @@ def test_version_specified_in_config_file(compiler, config):
         assert expected_version in version_map, fail_msg
         assert version_map[expected_version] == {source_path}, fail_msg
 
+def test_empty_file(compiler, config):
+    path = Path(__file__).parent / "EmptyFile"
+    with config.using_project(path) as project:
+        shutil.rmtree(project.contracts_folder / ".cache", ignore_errors=True) # remove cache
+        source_path = project.contracts_folder / "EmptyFile.sol"
+        version_map = compiler.get_version_map(source_path)
+        print(f"{version_map=}")
+
 def test_remapped_dependency(compiler, config):
     path = Path(__file__).parent / "RemappedDependency"
     with config.using_project(path) as project:

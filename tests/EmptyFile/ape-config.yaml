@@ -1,0 +1,7 @@
+dependencies:
+  - name: TestEmptyFile
+    local: ../EmptyFile
+
+solidity:
+  import_remapping:
+    - "@emptyfile_remapping=TestEmptyFile"
