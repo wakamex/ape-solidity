@@ -185,6 +185,12 @@ def test_version_specified_in_config_file(compiler, config):
         assert expected_version in version_map, fail_msg
         assert version_map[expected_version] == {source_path}, fail_msg
 
+def test_remapped_dependency(compiler, config):
+    path = Path(__file__).parent / "RemappedDependency"
+    with config.using_project(path) as project:
+        shutil.rmtree(project.contracts_folder / ".cache", ignore_errors=True) # remove cache
+        source_path = project.contracts_folder / "RemappedDependency.sol"
+        version_map = compiler.get_version_map(source_path)
 
 def test_get_version_map(project, compiler):
     # Files are selected in order to trigger `CompilesOnce.sol` to
