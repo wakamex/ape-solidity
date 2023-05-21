@@ -4,6 +4,5 @@ dependencies:
     version: 4.8.3
 
 solidity:
-  version: 0.8.12
   import_remapping:
     - "@openzeppelin/contracts=OpenZeppelin/4.8.3"
