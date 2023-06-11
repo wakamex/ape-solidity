@@ -171,7 +171,27 @@ class SolidityCompiler(CompilerAPI):
                     logger.debug(f"Unable to find dependency '{package_id}'.")
 
                 else:
+                    # pm = PackageManifest()
+                    # for i in [i for i in dir(pm) if not i.startswith("_")]:
+                    #     print(i)
+
+                    # manifest_data = cached_manifest_file.read_text()
+                    # manifest_dict = load_dict(manifest_data)
+                    # manifest = PackageManifest.validate(manifest_dict)
+                    # print(f"{manifest.sources[list(manifest.sources.keys())[0]].content=}")
+
+                    # sources = manifest.sources
+                    # first_source = sources[list(sources.keys())[0]]
+                    # print(f"{type(first_source)=}")
+                    # first_source.content = None
+                    # print(f"{str(first_source.content)=}")
+                    # print(f"{first_source.content if isinstance(first_source.content, str) else str(first_source.content)=}")
+                    # method1 = str(first_source.content)
+                    # method2 = first_source.content if isinstance(first_source.content, str) else str(first_source.content)
+                    # print(f"{(method1 == method2)=}")
+                
                     manifest = PackageManifest.parse_file(cached_manifest_file)
+                    # print(f"{manifest.sources[list(manifest.sources.keys())[0]].content=}")
                     self._add_dependencies(manifest, sub_contracts_cache, builder)
 
         # Update cache and hash
@@ -199,7 +219,9 @@ class SolidityCompiler(CompilerAPI):
             cached_source.parent.mkdir(parents=True, exist_ok=True)
             if src.content:
                 cached_source.touch()
-                cached_source.write_text(src.content or "")
+                # if "access/AccessControl.sol" in str(src.content):
+                #     print(f"{src.content=}")
+                cached_source.write_text(str(src.content))
 
         # Add dependency remapping that may be needed.
         for compiler in manifest.compilers or []:
